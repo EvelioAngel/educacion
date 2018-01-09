@@ -1,0 +1,16 @@
+#main-menu > li > a{
+    color: #fff;    
+}
+.panel-heading div {
+    margin-top: -18px;
+    font-size: 15px;
+}
+.container{
+    margin-top: 30px;
+}
+.nav-pills > li > a:hover, .nav-pills > li > a:focus{    
+    background-color: transparent !important;
+}
+.red{
+    color: red;
+}

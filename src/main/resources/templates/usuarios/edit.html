@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+    </head>
+    <body>
+        <!--/*/ <th:block th:replace="fragments/header :: header"></th:block> /*/-->
+
+        <div class="container">
+            <div class="row"> 
+
+                <form method="post" action="/usuarios/edit" onsubmit="return Validacion()">
+
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <h2>Modificar Usuario</h2>
+
+                        <div id="errorcontrasena" class="alert alert-danger" hidden="true">Las contraseñas no coinciden</div>
+
+                        <div class="form-group">
+                            <label for="">Usuario :</label>                             
+                            <input type="text" class="form-control" name="username" readonly="true" th:value="${user.username}">
+                        </div>  
+
+                        <div class="form-group">
+                            <label for="">Contraseña:</label>
+                            <input type="text" class="form-control" id="password" name="password" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Repetir Contraseña:</label>
+                            <input type="text" class="form-control" id="password2" name="password2" required="required" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Rol:</label>
+                            <input type="text" class="form-control" name="rol" required="required" th:value="${user.rol}">
+                        </div> 
+
+                        <div class="form-group">
+                            <label for="">Activo:</label>
+                            <input id="pr" type="checkbox" class="" name="activo" th:checked="${user.activo}" >
+                        </div>
+
+                        <div class="form-group"> <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a class="btn btn-primary" th:href="@{/usuarios}">Cancelar</a>
+                        </div>
+
+                    </div>                 
+                </form>
+            </div>
+        </div> 
+        <script>
+            function Validacion() {
+                if ($("#password").val() === $("#password2").val())
+                    return true;
+
+                $("#errorcontrasena").show();
+                return false;
+            }
+        </script>
+    </body>
+</html>

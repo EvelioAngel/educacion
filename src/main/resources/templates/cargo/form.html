@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+    </head>
+    <body>
+        <!--/*/ <th:block th:replace="fragments/header :: header"></th:block> /*/-->
+
+        <div class="container">
+            <div class="row">
+
+                <form method="post" action="/cargo" >                 
+
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <h2>Cargo</h2>
+
+                        <div id="errorinsertado" th:if="${notices}" th:text="${notices}" class="alert alert-danger" ></div>
+                        
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion :</label>  
+                            <input type="hidden" name="idCargo" th:value="${cargo.idCargo}">
+                            <input type="text" class="form-control" name="descripcion" required="required" th:value="${cargo.descripcion}" maxlength="100">
+                        </div>                           
+
+                        <div class="form-group"> <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a class="btn btn-primary" th:href="@{/cargo}">Cancelar</a>
+                        </div>
+
+                    </div>                             
+                </form>
+            </div>
+        </div>         
+
+        
+    </body>
+</html>
