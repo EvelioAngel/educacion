@@ -28,4 +28,10 @@ public class IndexController {
                 
         return "login";
     }
+    
+    @RequestMapping(value = "/acerca", method = RequestMethod.GET)
+    public String acerca(Model model) {
+                
+        return "acerca";
+    }
 }

@@ -5,7 +5,11 @@
  */
 package web.educacion.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -26,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -104,7 +109,9 @@ public class Trabajador implements Serializable {
     @Column(name = "militancia")
     private String militancia;
     @Column(name = "fecha_alta")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)    
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaAlta;
     @Size(max = 100)
     @Column(name = "motivo_alta")
@@ -115,6 +122,10 @@ public class Trabajador implements Serializable {
     @Size(max = 100)
     @Column(name = "motivo_baja")
     private String motivoBaja;
+    @Basic(optional = true)
+    @NotNull
+    @Column(name = "activo")
+    private Boolean activo;
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
     @ManyToOne(optional = false)
     private Cargo idCargo;
@@ -248,8 +259,8 @@ public class Trabajador implements Serializable {
     public void setMilitancia(String militancia) {
         this.militancia = militancia;
     }
-
-    public Date getFechaAlta() {
+        
+    public Date getFechaAlta(){ 
         return fechaAlta;
     }
 
@@ -333,6 +344,14 @@ public class Trabajador implements Serializable {
         return idNivelPreparacion;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    } 
+        
     public void setIdNivelPreparacion(NivelPreparacion idNivelPreparacion) {
         this.idNivelPreparacion = idNivelPreparacion;
     }

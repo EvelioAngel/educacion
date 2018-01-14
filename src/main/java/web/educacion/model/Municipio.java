@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Municipio.findByDescripcion", query = "SELECT m FROM Municipio m WHERE m.descripcion = :descripcion")})
 public class Municipio implements Serializable {
 
+    @OneToMany(mappedBy = "idMunicipio")
+    private Collection<Usuarios> usuariosCollection;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "codigo")
@@ -139,6 +142,15 @@ public class Municipio implements Serializable {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    @XmlTransient
+    public Collection<Usuarios> getUsuariosCollection() {
+        return usuariosCollection;
+    }
+
+    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
+        this.usuariosCollection = usuariosCollection;
     }
     
 }

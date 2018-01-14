@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import web.educacion.model.Usuarios;
+import web.educacion.repository.MunicipioRepo;
 import web.educacion.repository.UsuariosRepo;
 import web.educacion.util;
 
@@ -31,6 +32,9 @@ public class UsuariosController {
     @Autowired
     UsuariosRepo usuariosRepo;
     
+    @Autowired
+    MunicipioRepo repoMunicipio;
+    
     @RequestMapping(value = "/usuarios", method = RequestMethod.GET)
     public String index(Model model,@SortDefault("username") Pageable pageable) {
         
@@ -40,13 +44,13 @@ public class UsuariosController {
     
     @RequestMapping(value = "/usuarios/nuevo", method = RequestMethod.GET)
     public String nuevo(Model model) {        
-        
+        model.addAttribute("municipio", repoMunicipio.findAll());
         return "usuarios/form";
     }
     
     @RequestMapping(value = "/usuarios/{id}/edit", method = RequestMethod.GET)
     public String edit(Model model,@PathVariable String id) {
-        
+        model.addAttribute("municipio", repoMunicipio.findAll());
         model.addAttribute("user", usuariosRepo.findOne(id));
         return "usuarios/edit";
     }

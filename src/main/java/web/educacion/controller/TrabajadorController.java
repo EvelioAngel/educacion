@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.educacion.model.Trabajador;
 import web.educacion.model.TrabajadorHistorico;
+import web.educacion.model.Usuarios;
 import web.educacion.repository.CargoRepo;
 import web.educacion.repository.CategoriaCientificaRepo;
 import web.educacion.repository.CategoriaOcupacionalRepo;
@@ -29,6 +30,7 @@ import web.educacion.repository.EspecialidadRepo;
 import web.educacion.repository.NivelPreparacionRepo;
 import web.educacion.repository.TrabajadorHistoricoRepo;
 import web.educacion.repository.TrabajadorRepo;
+import web.educacion.repository.UsuariosRepo;
 
 /**
  *
@@ -54,15 +56,24 @@ public class TrabajadorController {
     NivelPreparacionRepo repoNivel;
     @Autowired
     CategoriaOcupacionalRepo repoCategoriaOcupacional;
+    @Autowired
+    UsuariosRepo repoUser;
     
     @RequestMapping(value = "/trabajador", method = RequestMethod.GET)
     public String index(@RequestParam(required= false, defaultValue="") String nombre,
                        @RequestParam(required= false, defaultValue="") String ci,
                        Model model,@SortDefault("nombre") Pageable pageable) { 
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //String name = auth.getName(); //get logged in username
-        //System.out.println(name);
-        model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLike("%"+nombre+"%","%"+ci+"%",pageable));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        Usuarios user = repoUser.findOne(name); 
+        
+        if(user.getRol().equalsIgnoreCase("admin"))
+            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLike("%"+nombre+"%","%"+ci+"%",pageable));
+        else{
+            Integer municipio = user.getIdMunicipio().getIdMunicipio();
+            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLikeAndIdEntidadIdMunicipioIdMunicipio("%"+nombre+"%","%"+ci+"%", municipio,pageable));
+        }                 
+        
         model.addAttribute("nombre", nombre);
         model.addAttribute("ci", ci);
         return "trabajador/index";
@@ -82,7 +93,7 @@ public class TrabajadorController {
     }
     
     @RequestMapping(value = "/trabajador/{id}/edit", method = RequestMethod.GET)
-    public String edit(Model model,@PathVariable Integer id) {        
+    public String edit(Model model,@PathVariable Integer id) {         
         model.addAttribute("data", repo.findOne(id));
         model.addAttribute("entidad", repoEntidad.findAll());
         model.addAttribute("cargo", repoCargo.findAll());
@@ -96,10 +107,16 @@ public class TrabajadorController {
     
     @Transactional
     @RequestMapping(value = "/trabajador", method = RequestMethod.POST)
-    public String save(Model model,Trabajador trab ) { 
-        System.out.println("entro");
+    public String save(Model model, Trabajador trab ) { 
+        //System.out.println(fechaAlta);
         TrabajadorHistorico hist;
-        if(trab.getIdTrabajador()!= null){
+        if(trab.getIdTrabajador()!= null){//if exist then update
+            
+            String dbCi = repo.findOne(trab.getIdTrabajador()).getCi();//Ci of worker from DB
+            if(!trab.getCi().equals(dbCi)){//if change ci update historic
+                repoTrabajadorHistorico.setNumeroCi(trab.getCi(), dbCi);
+            }
+            
             trab = repo.save(trab);            
             hist = new TrabajadorHistorico(trab);
             Integer anno = Integer.parseInt( new SimpleDateFormat("YYYY").format(hist.getFecha()) );

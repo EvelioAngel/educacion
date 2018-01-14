@@ -65,7 +65,7 @@ and open the template in the editor.
                             <span class="glyphicon caret" ></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li ><a href="#" >Acerca</a></li>
+                            <li ><a th:href="@{/acerca}" >Acerca</a></li>
                             <li >
                                 <form id="form" th:action="@{/logout}" method="POST"></form>
                                 <a onclick="$('#form').submit();">Logout</a>

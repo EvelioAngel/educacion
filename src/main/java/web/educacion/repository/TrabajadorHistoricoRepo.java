@@ -21,4 +21,9 @@ public interface TrabajadorHistoricoRepo extends PagingAndSortingRepository<Trab
     @Query(value = "delete from trabajador_historico where id_trabajador = ?1 and extract(year from fecha) = ?2 and extract(month from fecha) = ?3",
            nativeQuery = true)
     void borrarPorIdYFecha(Integer id,int anno, int mes);
+    
+    @Modifying
+    @Query(value = "update trabajador_historico set ci = ?1 where ci = ?2",
+           nativeQuery = true)        
+    void setNumeroCi(String neww, String old);
 }

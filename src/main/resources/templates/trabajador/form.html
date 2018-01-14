@@ -21,53 +21,61 @@ and open the template in the editor.
                         <h2>Trabajadores</h2>
 
                         <div id="errorinsertado" th:if="${message}"  class="alert alert-danger" >Insertado correctamente</div>
-                        
+
+                        <div class="form-group"> <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a class="btn btn-primary" th:href="@{/trabajador}">Cancelar</a>
+                        </div>
+
                         <div class="form-group">
                             <label for="nombre">Nombre<span class="red">*</span> :</label>  
                             <input type="hidden" name="idTrabajador" th:value="${data.idTrabajador}">
                             <input type="text" class="form-control" name="nombre" required="required" th:value="${data.nombre}">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="ci">CI :</label>                            
                             <input type="number" id="ci" class="form-control" name="ci" required="required" th:value="${data.ci}" minlength="11" maxlength="11">
                         </div>    
-                        
+
                         <div class="form-group">
                             <label for="direccion">Direccion :</label>                            
                             <input type="text" class="form-control" name="direccion" th:value="${data.direccion}" maxlength="200" >
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="telefono">Telefono :</label>                            
                             <input type="text" class="form-control" name="telefono" th:value="${data.telefono}" >
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="correo">Correo :</label>                            
                             <input type="email" class="form-control" name="correo" th:value="${data.correo}" >
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="grupoEscala">Grupo Escala :</label>                            
                             <input type="text" class="form-control" name="grupoEscala" th:value="${data.grupoEscala}" >
                         </div>
-                        
+
                         <div class="form-group">                            
                             <input id="docente"  type="checkbox" name="docente" th:checked="${data.docente}" >
                             <label for="">Docente :</label>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="annosEsperiencia">Años Experiencia :</label>                            
                             <input type="number" class="form-control" name="annosEsperiencia" th:value="${data.annosEsperiencia}" >
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="militancia">Militancia :</label>                            
-                            <input type="text" class="form-control" name="militancia" th:value="${data.militancia}" >
+                            <label for="militancia">Militancia :</label> 
+                            <select class="form-control" name="militancia" th:field="${data.militancia}">
+                                <option value="UJC">UJC</option>
+                                <option value="PCC">PCC</option>
+                            </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="sexo">Sexo :</label>                            
                             <select class="form-control" name="sexo" required="required" th:field='${data.sexo}'>
@@ -75,7 +83,7 @@ and open the template in the editor.
                                 <option value="F">Femenino</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="raza">Raza :</label>                            
                             <select class="form-control" name="raza" required="required" th:field='${data.raza}'>
@@ -84,54 +92,74 @@ and open the template in the editor.
                                 <option value="Negro">Negro</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idEntidad">Entidad :</label>                            
                             <select class="form-control" name="idEntidad" required="required" th:field='${data.idEntidad}'>
                                 <option th:each='ent :${entidad}' th:value="${ent.idEntidad}" th:text='${ent.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idCargo">Cargo :</label>                            
                             <select class="form-control" name="idCargo" required="required" th:field='${data.idCargo}'>
                                 <option th:each='carg :${cargo}' th:value="${carg.idCargo}" th:text='${carg.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idEnsenanza">Enseñanza :</label>                            
                             <select class="form-control" name="idEnsenanza" required="required" th:field='${data.idEnsenanza}'>
                                 <option th:each='ens :${ensenanza}' th:value="${ens.idEnsenanza}" th:text='${ens.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idEspecialidad">Especialidad :</label>                            
                             <select class="form-control" name="idEspecialidad" required="required" th:field='${data.idEspecialidad}'>
                                 <option th:each='esp :${especialidad}' th:value="${esp.idEspecialidad}" th:text='${esp.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idCategoriaCientifica">Categoria Cientifica :</label>                            
                             <select class="form-control" name="idCategoriaCientifica" required="required" th:field='${data.idCategoriaCientifica}'>
                                 <option th:each='cat :${categoriaCientifica}' th:value="${cat.idCategoriaCientifica}" th:text='${cat.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idNivelPreparacion">Nivel de Preparacion :</label>                            
                             <select class="form-control" name="idNivelPreparacion" required="required" th:field='${data.idNivelPreparacion}'>
                                 <option th:each='niv :${nivel}' th:value="${niv.idNivelPreparacion}" th:text='${niv.descripcion}'></option>  
                             </select>
                         </div>
-                        
+
                         <div class="form-group" >
                             <label for="idCategoriaOcupacional">Categoria Ocupacional :</label>                            
                             <select class="form-control" name="idCategoriaOcupacional" required="required" th:field='${data.idCategoriaOcupacional}'>
                                 <option th:each='cat :${categoriaOcupacional}' th:value="${cat.idCategoriaOcupacional}" th:text='${cat.descripcion}'></option>  
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaAlta">Fecha de Alta :</label>                            
+                            <input type="text" id="fecha" class="form-control" name="fechaAlta" th:value="${data.fechaAlta}" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motivoAlta">Motivo de Alta :</label>                            
+                            <input type="text" class="form-control" name="motivoAlta" th:value="${data.motivoAlta}">
+                        </div>
+
+                        <div class="form-group" th:if="${data.idTrabajador != null}">
+                            <label for="fechaBaja">Fecha de Baja :</label>                            
+                            <input type="text" id="fechaBaja" class="form-control" name="fechaBaja" th:value="${data.fechaBaja}" >
+                        </div>
+
+                        <div class="form-group" th:if="${data.idTrabajador != null}">
+                            <label for="motivoBaja">Motivo de Baja :</label>                            
+                            <input type="text" class="form-control" name="motivoBaja" th:value="${data.motivoBaja}">
                         </div>
 
                         <div class="form-group"> <!-- Submit Button -->
@@ -145,13 +173,41 @@ and open the template in the editor.
         </div>         
 
         <script>
-            function Validar(){
-                if($("#ci").val().length !== 11){
+            function Validar() {
+                if ($("#ci").val().length !== 11) {
                     alert("El campo Carnet de Identidad debe tener 11 digitos");
                     return false;
                 }
                 return true;
             }
+
+            $(function () {
+                $("#fecha").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    dateFormat: 'dd/mm/yy'
+                });
+
+                $("#fechaBaja").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    dateFormat: 'dd/mm/yy'
+                });
+
+                var aux = $("#fecha").val();
+                if (aux.length == 10) {
+                    var res = aux[8] + aux[9] + '/' + aux[5] + aux[6] + '/' + aux[0] + aux[1] + aux[2] + aux[3];
+                    $("#fecha").val(res);
+                }
+                try {
+                    aux = $("#fechaBaja").val();
+                    if (aux.length == 10) {
+                        var res = aux[8] + aux[9] + '/' + aux[5] + aux[6] + '/' + aux[0] + aux[1] + aux[2] + aux[3];
+                        $("#fechaBaja").val(res);
+                    }
+                } catch (e) {
+                }
+            });
         </script>    
     </body>
 </html>

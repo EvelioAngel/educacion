@@ -37,9 +37,10 @@ and open the template in the editor.
                                 <form th:action="@{/trabajador}" method="get">
                                     <td><input type="text" name="nombre" class="form-control" placeholder="Nombre" th:value="${nombre}" /></td>
                                     <td><input type="text" name="ci" class="form-control" placeholder="CI" th:value="${ci}" /></td>
+                                    <td><button type="submit" class="btn btn-default">Buscar</button></td> 
                                     <td></td>
                                     <td></td>
-                                    <td><button type="submit" class="btn btn-default">Buscar</button></td>     
+                                    <td></td>     
                                 </form>
                             </div>
                             </tr>
@@ -51,7 +52,8 @@ and open the template in the editor.
                                 <th><a class="sorted" sd:pagination-sort="ci" >CI</a></th>
                                 <th><a class="sorted" sd:pagination-sort="idEntidad" >Entidad</a></th>
                                 <th><a class="sorted" sd:pagination-sort="idEnsenanza" >Enseñanza</a></th>
-                                <th style="width: 7%"></th>
+                                <th><a class="sorted" sd:pagination-sort="idEntidad.idMunicipio" >Municipio</a></th>
+                                <th style="width: 3%"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,8 +62,9 @@ and open the template in the editor.
                                     <td scope="row" th:text="${row.ci}">ci</td>
                                     <td scope="row" th:text="${row.idEntidad.descripcion}">entidad</td>
                                     <td scope="row" th:text="${row.idEnsenanza.descripcion}">enseñanza</td>
+                                    <td scope="row" th:text="${row.idEntidad.idMunicipio.descripcion}">municipio</td>
                                     <td><a th:href="${'/trabajador/'+row.idTrabajador+'/edit'}"><span class='glyphicon glyphicon-pencil'></span></a>
-                                        <a rel="nofollow" th:href="${'/trabajador/'+row.idTrabajador+'/'+page.number+'/'+page.sort}" data-method="delete" data-confirm="Esta seguro que desea eliminar?"><span class='glyphicon glyphicon-remove'></span></a></td>
+                                        <!--a rel="nofollow" th:href="${'/trabajador/'+row.idTrabajador+'/'+page.number+'/'+page.sort}" data-method="delete" data-confirm="Esta seguro que desea eliminar?"><span class='glyphicon glyphicon-remove'></span></a--></td>
                                 </tr>
                             </tbody>
                         </table>

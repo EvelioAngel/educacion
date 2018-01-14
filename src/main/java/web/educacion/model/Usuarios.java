@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,20 +41,36 @@ public class Usuarios implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "username")
     private String username;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "password")
     private String password;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "rol")
     private String rol;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "activo")
     private Boolean activo;
+    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
+    @ManyToOne
+    private Municipio idMunicipio;
 
     public Usuarios() {
     }
 
     public Usuarios(String username) {
         this.username = username;
+    }
+
+    public Usuarios(String username, String password, String rol, boolean activo) {
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+        this.activo = activo;
     }
 
     public String getUsername() {
@@ -85,6 +103,14 @@ public class Usuarios implements Serializable {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public Municipio getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(Municipio idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
     @Override

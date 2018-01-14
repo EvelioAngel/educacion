@@ -115,6 +115,10 @@ public class TrabajadorHistorico implements Serializable {
     @Size(max = 100)
     @Column(name = "motivo_baja")
     private String motivoBaja;
+    @Basic(optional = true)
+    @NotNull
+    @Column(name = "activo")
+    private Boolean activo;
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
     @ManyToOne(optional = false)
     private Cargo idCargo;
@@ -383,6 +387,14 @@ public class TrabajadorHistorico implements Serializable {
         this.idTrabajador = idTrabajador;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }    
+    
     @Override
     public int hashCode() {
         int hash = 0;
