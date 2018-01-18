@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ensenanza" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="4e35c341-a776-4a54-91d2-95f9b214ca51">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ensenanza" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cargo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyectos\\Educacion_Prov\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="especialidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+en.id_ensenanza,
+en.descripcion as ensenanza,
+e.id_municipio,
+count(t.id_trabajador) as cantidad
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join ensenanza en on t.id_ensenanza = en.id_ensenanza
+inner join municipio m on e.id_municipio = m.id_municipio
+where ('-1' = $P{ensenanza} OR en.id_ensenanza = $P{ensenanza} )and ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} )
+group by en.id_ensenanza, e.id_municipio
+order by en.id_ensenanza]]>
+	</queryString>
+	<field name="id_ensenanza" class="java.lang.Integer"/>
+	<field name="ensenanza" class="java.lang.String"/>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="sum_cant_ens" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15" uuid="e658a694-5e60-4dd6-af3b-c21684790399"/>
+				<textElement>
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ensenanza}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="120" y="0" width="120" height="15" uuid="1abb6f5d-e0c7-41a8-9d2a-d11fe457fffc"/>
+				<subreportParameter name="ensenanza">
+					<subreportParameterExpression><![CDATA[$F{id_ensenanza}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="municipio">
+					<subreportParameterExpression><![CDATA[$F{id_municipio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cargo">
+					<subreportParameterExpression><![CDATA[$P{cargo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="especialidad">
+					<subreportParameterExpression><![CDATA[$P{especialidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cargo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="133" height="20" uuid="68ae4636-1795-4e1b-94a2-4df175698d3c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total por Enseñanza:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="0" width="60" height="20" uuid="6f77ca69-9582-449a-8124-5b00f03b0693"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum_cant_ens}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="15" width="452" height="1" uuid="539cb949-a46c-460d-8c45-2652b8dd44f7"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

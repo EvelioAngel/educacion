@@ -51,7 +51,15 @@ and open the template in the editor.
                             </ul>
                         </li>
                         
-                        <li><a th:href="@{/#}">Informes</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/#}">Informes</a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/reportes/view/trab_mun_ent}">Trabajadores por Municipio y Entidad</a></li>
+                                <li><a th:href="@{/reportes/view/cant_trab_mun}"># de Trabajadores por Municipio y Entidad</a></li>
+                                <li><a th:href="@{/reportes/view/cant_trab_ens}"># de Trabajadores por Enseñanza, cargo y Especialidad</a></li>
+                                <li><a th:href="@{/reportes/view/trab_mun_ent_ens}">Trabajadores por Municipio, Entidad y Enseanza</a></li>
+                            </ul>
+                        </li>
                         
                     </ul>  
                 </div>  

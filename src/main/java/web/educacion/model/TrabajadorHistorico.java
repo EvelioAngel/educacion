@@ -115,8 +115,6 @@ public class TrabajadorHistorico implements Serializable {
     @Size(max = 100)
     @Column(name = "motivo_baja")
     private String motivoBaja;
-    @Basic(optional = true)
-    @NotNull
     @Column(name = "activo")
     private Boolean activo;
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
@@ -171,6 +169,7 @@ public class TrabajadorHistorico implements Serializable {
         this.motivoAlta = trab.getMotivoAlta();
         this.motivoBaja = trab.getMotivoBaja();
         this.telefono = trab.getTelefono();
+        this.activo = trab.getActivo();
     }
     
     public TrabajadorHistorico(Integer idTrabajadorHistorico) {

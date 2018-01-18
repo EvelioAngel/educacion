@@ -15,9 +15,9 @@ import web.educacion.model.Trabajador;
  * @author Evelio
  */
 public interface TrabajadorRepo extends PagingAndSortingRepository<Trabajador, Integer>{
-    Page<Trabajador> findByNombreIgnoreCaseLikeAndCiLike(String nombre, String ci, Pageable pageable);
+    Page<Trabajador> findByNombreIgnoreCaseLikeAndCiLikeAndActivo(String nombre, String ci, Boolean activo,Pageable pageable);
     
-    Page<Trabajador> findByNombreIgnoreCaseLikeAndCiLikeAndIdEntidadIdMunicipioIdMunicipio(String nombre, String ci, Integer idMunicipio,Pageable pageable);
+    Page<Trabajador> findByNombreIgnoreCaseLikeAndCiLikeAndIdEntidadIdMunicipioIdMunicipioAndActivo(String nombre, String ci, Integer idMunicipio, Boolean activo,Pageable pageable);
 
     String findCiByIdTrabajador(Integer idTrabajador);
 }

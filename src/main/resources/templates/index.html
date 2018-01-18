@@ -8,9 +8,70 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+        <script th:src="@{/webjars/chart.js/2.7.1/dist/Chart.js}"></script>
     </head>
     <body>
-        <!--/*/ <th:block th:replace="fragments/header :: header"></th:block> /*/-->       
-
+        <!--/*/ <th:block th:replace="fragments/header :: header"></th:block> /*/-->    
+        <div class="container">
+            <div class="row">
+                <div class="" style="width: 1100px; height: 400px; display: block;">
+                    <canvas id="myChart" ></canvas>
+                </div>
+            </div>
+        </div>
+        <script>
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Bayamo", "Guisa", "Jiguani", "Pilon", "Niquero", "Manzanillo","Media Luna","Rio Cauto","Cauto Cristo","Yara","Campechuela","B.Maso","B.Arriba"],
+                    datasets: [{
+                            label: '# de Trabajadores',
+                            data: [12, 19, 3, 5, 2, 3, 3, 5, 2, 5, 2, 5, 2],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

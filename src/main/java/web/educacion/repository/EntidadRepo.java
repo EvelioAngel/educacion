@@ -16,4 +16,5 @@ import web.educacion.model.Entidad;
  */
 public interface EntidadRepo extends CrudRepository<Entidad, Integer>{
     Page<Entidad> findAll(Pageable pageable);
+    Iterable<Entidad> findByIdMunicipioIdMunicipio(Integer idMunicipio);
 }

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trab_mun_ent" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+m.id_municipio,
+m.descripcion as municipio,
+e.id_entidad,
+e.descripcion as entidad,
+count(t.id_trabajador) as cantidad
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join municipio m on e.id_municipio = m.id_municipio
+where ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} )
+group by m.id_municipio, e.id_entidad
+order by m.id_municipio, e.id_entidad]]>
+	</queryString>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="id_entidad" class="java.lang.Integer"/>
+	<field name="entidad" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="sum_mun" class="java.lang.Integer" resetType="Group" resetGroup="municipio" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<variable name="sum_total_trab" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<group name="municipio">
+		<groupExpression><![CDATA[$F{id_municipio}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement x="0" y="0" width="150" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<textField>
+					<reportElement x="400" y="5" width="60" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Verdana" size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{sum_mun}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="5" width="60" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Verdana" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total en:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="24" width="460" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="60" y="5" width="150" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Verdana" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="75" y="0" width="427" height="35"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección Provincial de Educación
+Departamento Recursos Humanos]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="500" y="75" width="69" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="75" width="150" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Confección: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="45" width="427" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Trabajadores por Municipio y Entidad]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Municipio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="250" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Entidad]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="18" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="150" y="0" width="250" height="20"/>
+				<textElement>
+					<font fontName="Verdana" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="60" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="362" y="2" width="179" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="541" y="2" width="30" height="20"/>
+				<textElement>
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="160" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Trabajadores:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="5" width="60" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Verdana" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{sum_total_trab}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="24" width="460" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

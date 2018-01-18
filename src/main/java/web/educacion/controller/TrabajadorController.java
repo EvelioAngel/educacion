@@ -68,10 +68,10 @@ public class TrabajadorController {
         Usuarios user = repoUser.findOne(name); 
         
         if(user.getRol().equalsIgnoreCase("admin"))
-            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLike("%"+nombre+"%","%"+ci+"%",pageable));
+            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLikeAndActivo("%"+nombre+"%","%"+ci+"%",true,pageable));
         else{
             Integer municipio = user.getIdMunicipio().getIdMunicipio();
-            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLikeAndIdEntidadIdMunicipioIdMunicipio("%"+nombre+"%","%"+ci+"%", municipio,pageable));
+            model.addAttribute("page", repo.findByNombreIgnoreCaseLikeAndCiLikeAndIdEntidadIdMunicipioIdMunicipioAndActivo("%"+nombre+"%","%"+ci+"%", municipio,true,pageable));
         }                 
         
         model.addAttribute("nombre", nombre);
@@ -108,14 +108,19 @@ public class TrabajadorController {
     @Transactional
     @RequestMapping(value = "/trabajador", method = RequestMethod.POST)
     public String save(Model model, Trabajador trab ) { 
-        //System.out.println(fechaAlta);
+        trab.setActivo(true);
         TrabajadorHistorico hist;
         if(trab.getIdTrabajador()!= null){//if exist then update
             
             String dbCi = repo.findOne(trab.getIdTrabajador()).getCi();//Ci of worker from DB
-            if(!trab.getCi().equals(dbCi)){//if change ci update historic
+            if(!trab.getCi().equals(dbCi)){//if change ci update historic ci
                 repoTrabajadorHistorico.setNumeroCi(trab.getCi(), dbCi);
             }
+            
+            if(trab.getFechaBaja()!=null){
+                trab.setActivo(false);
+            }
+            
             
             trab = repo.save(trab);            
             hist = new TrabajadorHistorico(trab);

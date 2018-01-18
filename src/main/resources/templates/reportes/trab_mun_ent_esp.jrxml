@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trab_mun_ent_esp" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="221"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="entidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="especialidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+t.ci,
+t.nombre,
+co.descripcion as categoria_ocupacional,
+cc.descripcion as categoria_cientifica,
+np.descripcion as nivel_preparacion,
+case when (t.docente) = TRUE then 'SI' else 'NO' end as docente,
+es.descripcion as especialidad,
+e.id_entidad,
+e.descripcion as entidad,
+e.id_municipio,
+m.descripcion as municipio
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join especialidad es on t.id_especialidad = es.id_especialidad
+inner join municipio m on e.id_municipio = m.id_municipio
+inner join categoria_ocupacional co on t.id_categoria_ocupacional = co.id_categoria_ocupacional
+inner join categoria_cientifica cc on t.id_categoria_cientifica = cc.id_categoria_cientifica
+inner join nivel_preparacion np on t.id_nivel_preparacion = np.id_nivel_preparacion
+where ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} ) and ('-1' = $P{entidad} OR e.id_entidad = $P{entidad}) and es.id_especialidad =  $P{especialidad}
+order by e.id_municipio, e.id_entidad]]>
+	</queryString>
+	<field name="ci" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="categoria_ocupacional" class="java.lang.String"/>
+	<field name="categoria_cientifica" class="java.lang.String"/>
+	<field name="nivel_preparacion" class="java.lang.String"/>
+	<field name="docente" class="java.lang.String"/>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="id_entidad" class="java.lang.Integer"/>
+	<field name="entidad" class="java.lang.String"/>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="municipio" class="java.lang.String"/>
+	<group name="municipio">
+		<groupExpression><![CDATA[$F{id_municipio}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="0" y="0" width="60" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Municipio:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="60" y="0" width="200" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="20" width="260" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Entidad">
+		<groupExpression><![CDATA[$F{id_entidad}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<staticText>
+					<reportElement x="20" y="0" width="60" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Verdana" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Entidad:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="80" y="0" width="200" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="20" y="20" width="300" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="0" width="430" height="35"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección Provincial de Educación
+Departamento Recursos Humanos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="45" width="430" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Trabajadores por Municipio, Entidad y Especialidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="529" y="80" width="132" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Confección: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="661" y="80" width="81" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="80" width="90" height="20"/>
+				<textElement>
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Especialidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="80" width="200" height="20"/>
+				<textElement>
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{especialidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="150" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE Y APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="150" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORÍA
+OCUPACIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="150" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORÍA
+CIENTIFICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="0" width="150" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIVEL
+PREPARACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="680" y="0" width="72" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="752" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="30" width="752" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ci}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{categoria_ocupacional}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{categoria_cientifica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nivel_preparacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

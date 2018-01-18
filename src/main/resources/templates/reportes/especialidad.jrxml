@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="especialidad" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ensenanza" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cargo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyectos\\Educacion_Prov\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="especialidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+e.id_municipio,
+en.id_ensenanza,
+c.id_cargo,
+es.id_especialidad,
+es.descripcion as especialidad,
+count(t.id_trabajador) as cantidad
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join cargo c on t.id_cargo = c.id_cargo
+inner join ensenanza en on t.id_ensenanza = en.id_ensenanza
+inner join especialidad es on t.id_especialidad = es.id_especialidad
+inner join municipio m on e.id_municipio = m.id_municipio
+where ('-1' = $P{cargo} OR c.id_cargo = $P{cargo} ) and ('-1' = $P{ensenanza} OR en.id_ensenanza = $P{ensenanza} )and ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} )
+	and ('-1' = $P{especialidad} OR es.id_especialidad = $P{especialidad} )
+group by e.id_municipio, en.id_ensenanza, c.id_cargo, es.id_especialidad
+order by es.id_especialidad]]>
+	</queryString>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="id_ensenanza" class="java.lang.Integer"/>
+	<field name="id_cargo" class="java.lang.Integer"/>
+	<field name="id_especialidad" class="java.lang.Integer"/>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="sum_cant_esp" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="120" height="15"/>
+				<textElement>
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{especialidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="60" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="130" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total por Especialidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="0" width="60" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{sum_cant_esp}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="15" width="212" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

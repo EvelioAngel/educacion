@@ -118,12 +118,12 @@ public class Trabajador implements Serializable {
     private String motivoAlta;
     @Column(name = "fecha_baja")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaBaja;
     @Size(max = 100)
     @Column(name = "motivo_baja")
     private String motivoBaja;
-    @Basic(optional = true)
-    @NotNull
     @Column(name = "activo")
     private Boolean activo;
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo")
