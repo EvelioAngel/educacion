@@ -8,37 +8,45 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
-
+        
     </head>
     <body>
         <!--/*/ <th:block th:replace="fragments/header :: header"></th:block> /*/-->
         <div class="container">
             <div class="row">
 
-                <form method="get" action="/reportes/trab_mun_ent" target="_blank">                 
+                <form method="get" action="/reportes/trab_categoria_cientifica" target="_blank">                 
 
                     <div class="col-xs-6 col-xs-offset-3">
 
-                        <h2>Trabajadores por Municipio y Entidad</h2>
-                    </div> 
-                    <div class="col-xs-4 col-xs-offset-4">
+                        <h2>Cantidad de Trabajadores por Categoría Científica</h2>
+
                         <div class="form-group">
                             <label for="idMunicipio">Municipio :</label>                            
                             <select id="mun" class="form-control" name="municipio" required="required" >
+                                <option  value="-1">--Todas--</option>
                                 <option th:each='mun :${municipios}' th:value="${mun.idMunicipio}" th:text='${mun.descripcion}'></option>
                             </select>
-                        </div>
-
+                        </div>  
+                        
                         <div class="form-group" id="entsubordinada" >
                             <label for="entidadSubordina">Entidad :</label>     
                             <div id="ent">
-                                <select th:fragment="entidades"  class="form-control" name="entidad" required="required" >
+                                <select class="form-control" name="entidad" required="required" >
                                     <option  value="-1">--Todas--</option> 
                                     <option  th:each='ent :${entidades}' th:value="${ent.idEntidad}" th:text='${ent.descripcion}'></option>                                  
                                 </select>
                             </div>
                         </div>
-
+                        
+                        <div class="form-group">
+                            <label for="">Categoria Científica :</label>                            
+                            <select class="form-control" name="categoriaCientifica" required="required" >
+                                <option  value="-1">--Todas--</option>
+                                <option th:each='cat :${categoriaCientifica}' th:value="${cat.idCategoriaCientifica}" th:text='${cat.descripcion}'></option>
+                            </select>
+                        </div>   
+                        
                         <div class="form-group"> <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary">Mostrar</button>
                             <a class="btn btn-primary" th:href="@{/}">Cancelar</a>
@@ -47,7 +55,8 @@ and open the template in the editor.
                     </div>                             
                 </form>
             </div>
-        </div>   
+        </div>
+        
         <script>
             $(function () {
                 //cargar inicialmente municipio senalado

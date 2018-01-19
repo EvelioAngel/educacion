@@ -5,39 +5,26 @@
  */
 package web.educacion.controller;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import web.educacion.model.Municipio;
 import web.educacion.repository.CargoRepo;
+import web.educacion.repository.CategoriaCientificaRepo;
+import web.educacion.repository.CategoriaOcupacionalRepo;
 import web.educacion.repository.EnsenanzaRepo;
 import web.educacion.repository.EntidadRepo;
 import web.educacion.repository.EspecialidadRepo;
 import web.educacion.repository.MunicipioRepo;
+import web.educacion.repository.NivelPreparacionRepo;
 import web.educacion.util;
 
 /**
@@ -48,7 +35,7 @@ import web.educacion.util;
 public class ReportesController {
 
     @Autowired
-    private JdbcTemplate jdbctemplate;
+    DataSource datasource;
     @Autowired
     MunicipioRepo repoMun;
     @Autowired
@@ -59,6 +46,12 @@ public class ReportesController {
     CargoRepo repoCargo;
     @Autowired
     EspecialidadRepo repoEspecialidad;
+    @Autowired
+    CategoriaCientificaRepo repoCategoriaCientifica;
+    @Autowired
+    NivelPreparacionRepo repoNivelPreparacion;
+    @Autowired
+    CategoriaOcupacionalRepo repoCategoriaOcupacional;
 //////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "/reportes/view/trab_mun_ent", method = RequestMethod.GET)
@@ -80,7 +73,7 @@ public class ReportesController {
     void trabMunEnt(Integer municipio, Integer entidad, HttpServletResponse response) throws SQLException {
         String url = "templates/reportes/trabajadores_mun.jasper";
         String name = "TrabajadorMunicipioEntidad-";
-        Connection con = jdbctemplate.getDataSource().getConnection();
+        Connection con = datasource.getConnection();
         HashMap<String, Object> params = new HashMap<>();        
         params.put("municipio", municipio);
         params.put("entidad", entidad);
@@ -101,7 +94,7 @@ public class ReportesController {
     void cantTrabMun(Integer municipio, HttpServletResponse response) throws SQLException {
         String url = "templates/reportes/trab_mun_ent.jasper";
         String name = "CantidadTrabajadoresMun-";        
-        Connection con = jdbctemplate.getDataSource().getConnection();
+        Connection con = datasource.getConnection();
         HashMap<String, Object> params = new HashMap<>();
         params.put("municipio", municipio);
 
@@ -125,7 +118,7 @@ public class ReportesController {
         String url = "templates/reportes/trab_mun_otros.jasper";
         String name = "CantidadTrabajadoresOtros-";
         HashMap<String, Object> params = new HashMap<>();
-        Connection con = jdbctemplate.getDataSource().getConnection();
+        Connection con = datasource.getConnection();
         params.put("municipio", municipio);
         params.put("ensenanza",ensenanza);
         params.put("SUBREPORT_DIR","templates/reportes/");
@@ -149,12 +142,142 @@ public class ReportesController {
         String url = "templates/reportes/trab_mun_ent_ens.jasper";
         String name = "trab_mun_ent_ens-";
         HashMap<String, Object> params = new HashMap<>();
-        Connection con = jdbctemplate.getDataSource().getConnection();
+        Connection con = datasource.getConnection();
         params.put("municipio", municipio);
         params.put("entidad",entidad);
         params.put("ensenanza",ensenanza);
         
         util.exportar(params, response, con, url, name);
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "/reportes/view/trab_mun_ent_cargo", method = RequestMethod.GET)
+    public String viewTrabMunEntCargo(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("cargo", repoCargo.findAll());
+        return "reportes/trab_mun_ent_cargo";
+    }
     
+    @RequestMapping(value = "/reportes/trab_mun_ent_cargo", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabMunEntCargo(Integer municipio, Integer entidad ,Integer cargo, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_mun_ent_cargo.jasper";
+        String name = "trab_mun_ent_cargo-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();
+        params.put("municipio", municipio);
+        params.put("entidad",entidad);
+        params.put("cargo",cargo);
+        
+        util.exportar(params, response, con, url, name);
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    @RequestMapping(value = "/reportes/view/trab_mun_ent_esp", method = RequestMethod.GET)
+    public String viewTrabMunEntEsp(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("especialidad", repoEspecialidad.findAll());
+        return "reportes/trab_mun_ent_esp";
+    }
+    
+    @RequestMapping(value = "/reportes/trab_mun_ent_esp", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabMunEntEsp(Integer municipio, Integer entidad ,Integer especialidad, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_mun_ent_esp.jasper";
+        String name = "trab_mun_ent_esp-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();
+        params.put("municipio", municipio);
+        params.put("entidad",entidad);
+        params.put("especialidad",especialidad);
+        
+        util.exportar(params, response, con, url, name);
+    }
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    @RequestMapping(value = "/reportes/view/trab_docencia", method = RequestMethod.GET)
+    public String viewTrabDocencia(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("ensenanza", repoEnsenanza.findAll());
+        return "reportes/trab_docencia";
+    }
+    
+    @RequestMapping(value = "/reportes/trab_docencia", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabDocencia(Integer municipio, Integer ensenanza, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_docencia.jasper";
+        String name = "trab_docencia-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();
+        params.put("ensenanza",ensenanza);
+        params.put("municipio", municipio);        
+        
+        util.exportar(params, response, con, url, name);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "/reportes/view/trab_categoria_cientifica", method = RequestMethod.GET)
+    public String viewTrabCatCient(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("categoriaCientifica", repoCategoriaCientifica.findAll());
+        return "reportes/trab_categoria_cientifica";
+    }
+    
+    @RequestMapping(value = "/reportes/trab_categoria_cientifica", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabCatCient(Integer municipio, Integer entidad, Integer categoriaCientifica, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_categoria_cientifica.jasper";
+        String name = "trab_categoria_cientifica-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();        
+        params.put("municipio", municipio); 
+        params.put("entidad",entidad);
+        params.put("categoria_cientifica", categoriaCientifica);
+        
+        util.exportar(params, response, con, url, name);
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "/reportes/view/trab_nivel_preparacion", method = RequestMethod.GET)
+    public String viewTrabNivelPrep(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("nivelPreparacion", repoNivelPreparacion.findAll());
+        return "reportes/trab_nivel_preparacion";
+    }
+    
+    @RequestMapping(value = "/reportes/trab_nivel_preparacion", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabNivelPrep(Integer municipio, Integer entidad, Integer nivelPreparacion, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_nivel_preparacion.jasper";
+        String name = "trab_nivel_preparacion-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();        
+        params.put("municipio", municipio); 
+        params.put("entidad",entidad);
+        params.put("nivel_preparacion", nivelPreparacion);
+        
+        util.exportar(params, response, con, url, name);
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "/reportes/view/trab_categoria_ocupacional", method = RequestMethod.GET)
+    public String viewTrabCatOcup(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        model.addAttribute("categoriaOcupacional", repoCategoriaOcupacional.findAll());
+        return "reportes/trab_categoria_ocupacional";
+    }
+    
+    @RequestMapping(value = "/reportes/trab_categoria_ocupacional", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabCatOcup(Integer municipio, Integer entidad, Integer categoriaOcupacional, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_categoria_ocupacional.jasper";
+        String name = "trab_categoria_ocupacional-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();        
+        params.put("municipio", municipio); 
+        params.put("entidad",entidad);
+        params.put("categoria_ocupacional", categoriaOcupacional);
+        
+        util.exportar(params, response, con, url, name);
+    }
 }
