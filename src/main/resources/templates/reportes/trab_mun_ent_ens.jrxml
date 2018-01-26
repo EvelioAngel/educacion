@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trab_mun_ent_ens" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d6e69d7-9359-4097-9d9a-738cc11a35c5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trab_mun_ent_ens" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -51,21 +51,21 @@ order by e.id_municipio, e.id_entidad]]>
 		<groupHeader>
 			<band height="25">
 				<staticText>
-					<reportElement x="0" y="0" width="60" height="20" uuid="46847a90-1d4e-43b1-847a-b09cc9a2f852"/>
+					<reportElement x="0" y="0" width="60" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Municipio:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="60" y="0" width="200" height="20" uuid="3e8ffc80-d46c-4c51-b06b-d748de259752"/>
+					<reportElement x="60" y="0" width="200" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{municipio}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="0" y="20" width="260" height="1" uuid="ea5b0d4c-adcc-496e-b92b-8f98c6175591"/>
+					<reportElement x="0" y="20" width="260" height="1"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -75,21 +75,21 @@ order by e.id_municipio, e.id_entidad]]>
 		<groupHeader>
 			<band height="30">
 				<staticText>
-					<reportElement x="20" y="0" width="60" height="20" uuid="a0929244-e7e5-4eac-bddd-1658d2c56c07"/>
+					<reportElement x="20" y="0" width="60" height="20"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Verdana" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Entidad:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="80" y="0" width="200" height="20" uuid="2a25f571-3096-4585-9328-c32d66fa4ff6"/>
+					<reportElement x="80" y="0" width="200" height="20"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{entidad}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="20" y="20" width="300" height="1" uuid="ecd5777b-a8d3-40ab-b435-daa9bc7fcf15"/>
+					<reportElement x="20" y="20" width="300" height="1"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -100,7 +100,7 @@ order by e.id_municipio, e.id_entidad]]>
 	<title>
 		<band height="110" splitType="Stretch">
 			<staticText>
-				<reportElement x="150" y="0" width="430" height="35" uuid="30f22afd-d138-42a6-b8c9-99c148461664"/>
+				<reportElement x="150" y="0" width="430" height="35"/>
 				<textElement textAlignment="Center">
 					<font fontName="Verdana" size="12" isBold="true"/>
 				</textElement>
@@ -108,60 +108,60 @@ order by e.id_municipio, e.id_entidad]]>
 Departamento Recursos Humanos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="45" width="430" height="20" uuid="5515bea2-dd7b-44c0-a669-4ae69ef3a907"/>
+				<reportElement x="150" y="45" width="430" height="20"/>
 				<textElement textAlignment="Center">
 					<font fontName="Verdana" size="14" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Trabajadores por Municipio, Entidad y Enseanza]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="529" y="80" width="132" height="20" uuid="07edf8d6-c058-45a2-aa7c-ab16e559e382"/>
+				<reportElement x="529" y="80" width="132" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Verdana" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Confección: ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="661" y="80" width="81" height="20" uuid="977b165f-58ca-4ba5-a050-89f98757f992"/>
+				<reportElement x="661" y="80" width="81" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Verdana" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="5" y="80" width="65" height="20" uuid="9a96a2c5-f722-4c7f-a19d-e8309269cb28"/>
+				<reportElement x="5" y="80" width="65" height="20"/>
 				<textElement>
 					<font fontName="Verdana" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Enseanza:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="70" y="80" width="100" height="20" uuid="3559f5cd-087a-422e-9e84-861379034b2b"/>
+				<reportElement x="70" y="80" width="100" height="20"/>
 				<textElement>
 					<font fontName="Verdana" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ensenaza}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ensenaza}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="80" height="30" uuid="033a5e05-1c62-4406-a3aa-1be0ba33569d"/>
+				<reportElement x="0" y="0" width="80" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[CI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="0" width="150" height="30" uuid="1cbb49bc-9613-45b6-a3d8-1595c84f4133"/>
+				<reportElement x="80" y="0" width="150" height="30"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE Y APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="230" y="0" width="150" height="30" uuid="779f480a-3454-4229-b605-bf01a471c852"/>
+				<reportElement x="230" y="0" width="150" height="30"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
@@ -169,7 +169,7 @@ Departamento Recursos Humanos]]></text>
 OCUPACIONAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="0" width="150" height="30" uuid="83f1b434-0f4d-48ef-80e9-f3c5c7b8296f"/>
+				<reportElement x="380" y="0" width="150" height="30"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
@@ -177,7 +177,7 @@ OCUPACIONAL]]></text>
 CIENTIFICA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="530" y="0" width="150" height="30" uuid="46b81270-be9b-4772-9663-8b440ca4523d"/>
+				<reportElement x="530" y="0" width="150" height="30"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
@@ -185,63 +185,63 @@ CIENTIFICA]]></text>
 PREPARACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="680" y="0" width="72" height="30" uuid="d10826dd-42e3-4351-a604-0d06086fe3bd"/>
+				<reportElement x="680" y="0" width="72" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="0" width="752" height="1" uuid="81901963-2707-4dfb-893f-1feb665e1ba4"/>
+				<reportElement x="0" y="0" width="752" height="1"/>
 			</line>
 			<line>
-				<reportElement x="0" y="30" width="752" height="1" uuid="dab7d3ef-b3b2-41d9-bfa2-1f2e4cdb86dd"/>
+				<reportElement x="0" y="30" width="752" height="1"/>
 			</line>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="80" height="20" uuid="6ca6dfaa-c038-4c5c-b3be-1f05e40f6be4"/>
+				<reportElement x="0" y="0" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ci}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ci}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="0" width="150" height="20" uuid="0cba8ca2-acd3-4bdb-849e-84a4f561a134"/>
+				<reportElement x="80" y="0" width="150" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="0" width="150" height="20" uuid="9c92fcf2-de1c-4078-8364-d08f643de921"/>
+				<reportElement x="230" y="0" width="150" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{categoria_ocupacional}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{categoria_ocupacional}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="0" width="150" height="20" uuid="16d9509e-bc24-4871-9ecc-9f4ddd8c3126"/>
+				<reportElement x="380" y="0" width="150" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{categoria_cientifica}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{categoria_cientifica}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="530" y="0" width="150" height="20" uuid="eda37c2f-70eb-43fc-85f1-befedda4ea5b"/>
+				<reportElement x="530" y="0" width="150" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nivel_preparacion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nivel_preparacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="680" y="0" width="72" height="20" uuid="2722ad55-9e21-46e6-b364-1ed86c74d7f9"/>
+				<reportElement x="680" y="0" width="72" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docente}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

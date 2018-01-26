@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grupo_escala" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyectos\\Educacion_Prov\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="entidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+e.id_municipio,
+m.descripcion as municipio,
+e.descripcion as entidad,
+t.grupo_escala,
+count(t.id_trabajador) as cantidad
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join municipio m on e.id_municipio = m.id_municipio
+where ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} ) and ('-1' = $P{entidad} OR e.id_entidad = $P{entidad} )
+group by e.id_municipio, m.descripcion, e.descripcion, t.grupo_escala
+order by e.id_municipio, m.descripcion, e.descripcion, t.grupo_escala]]>
+	</queryString>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="entidad" class="java.lang.String"/>
+	<field name="grupo_escala" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="sum_cant_ge" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="15"/>
+				<textElement>
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{grupo_escala}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="75" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total por Grupo Escala:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="0" width="75" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{sum_cant_ge}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="15" width="225" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

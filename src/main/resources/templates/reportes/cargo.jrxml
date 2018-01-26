@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="4c3587d0-03ac-4c99-8dc9-fe7fb362becc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -45,52 +45,50 @@ order by c.id_cargo]]>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="15" uuid="2d9ea202-3827-460e-bfda-d893f62b8a22"/>
+				<reportElement x="0" y="0" width="100" height="15"/>
 				<textElement>
 					<font fontName="Verdana" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="120" y="0" width="200" height="15" uuid="aac7c75f-f6c2-45a8-b2fa-9092d9ed01c4"/>
-				<subreportParameter name="ensenanza">
-					<subreportParameterExpression><![CDATA[$P{ensenanza}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement x="120" y="0" width="200" height="15"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
 				<subreportParameter name="municipio">
 					<subreportParameterExpression><![CDATA[$P{municipio}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="cargo">
-					<subreportParameterExpression><![CDATA[$F{id_cargo}]]></subreportParameterExpression>
+				<subreportParameter name="ensenanza">
+					<subreportParameterExpression><![CDATA[$P{ensenanza}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="especialidad">
 					<subreportParameterExpression><![CDATA[$P{especialidad}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="cargo">
+					<subreportParameterExpression><![CDATA[$F{id_cargo}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "especialidad.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "especialidad.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
 	<summary>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="79bbc6c4-f987-40a3-8191-86f578f30d19"/>
+				<reportElement x="0" y="0" width="100" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total por Cargo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="240" y="0" width="60" height="20" uuid="9c42ab83-4241-44ad-b92e-31bd646e6964"/>
+				<reportElement x="240" y="0" width="60" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{sum_cant_cargo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{sum_cant_cargo}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="15" width="332" height="1" uuid="90054491-b415-4b09-a8d1-0212b72ecd99"/>
+				<reportElement x="0" y="15" width="332" height="1"/>
 			</line>
 		</band>
 	</summary>

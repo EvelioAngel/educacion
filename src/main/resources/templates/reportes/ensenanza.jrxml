@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ensenanza" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="4e35c341-a776-4a54-91d2-95f9b214ca51">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ensenanza" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -42,52 +42,49 @@ order by en.id_ensenanza]]>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="15" uuid="e658a694-5e60-4dd6-af3b-c21684790399"/>
+				<reportElement x="0" y="0" width="100" height="15"/>
 				<textElement>
 					<font fontName="Verdana" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ensenanza}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ensenanza}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="120" y="0" width="120" height="15" uuid="1abb6f5d-e0c7-41a8-9d2a-d11fe457fffc"/>
-				<subreportParameter name="ensenanza">
-					<subreportParameterExpression><![CDATA[$F{id_ensenanza}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement x="120" y="0" width="120" height="15"/>
 				<subreportParameter name="municipio">
 					<subreportParameterExpression><![CDATA[$F{id_municipio}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="cargo">
-					<subreportParameterExpression><![CDATA[$P{cargo}]]></subreportParameterExpression>
+				<subreportParameter name="ensenanza">
+					<subreportParameterExpression><![CDATA[$F{id_ensenanza}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="especialidad">
 					<subreportParameterExpression><![CDATA[$P{especialidad}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="cargo">
+					<subreportParameterExpression><![CDATA[$P{cargo}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cargo.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cargo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
 	<summary>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="133" height="20" uuid="68ae4636-1795-4e1b-94a2-4df175698d3c"/>
+				<reportElement x="0" y="0" width="133" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total por Enseñanza:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="360" y="0" width="60" height="20" uuid="6f77ca69-9582-449a-8124-5b00f03b0693"/>
+				<reportElement x="360" y="0" width="60" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Verdana" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{sum_cant_ens}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{sum_cant_ens}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="15" width="452" height="1" uuid="539cb949-a46c-460d-8c45-2652b8dd44f7"/>
+				<reportElement x="0" y="15" width="452" height="1"/>
 			</line>
 		</band>
 	</summary>

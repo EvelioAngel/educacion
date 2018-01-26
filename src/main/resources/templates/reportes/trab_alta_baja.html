@@ -15,11 +15,11 @@ and open the template in the editor.
         <div class="container">
             <div class="row">
 
-                <form method="get" action="/reportes/trab_mun_ent_cargo" target="_blank">                 
+                <form method="get" action="/reportes/trab_alta_baja" target="_blank">                 
 
                     <div class="col-xs-6 col-xs-offset-3">
 
-                        <h2>Trabajadores por Municipio, Entidad y Cargo</h2>
+                        <h2>Cantidad de Trabajadores de Alta y Baja</h2>
 
                         <div class="form-group">
                             <label for="idMunicipio">Municipio :</label>                            
@@ -32,19 +32,12 @@ and open the template in the editor.
                         <div class="form-group" id="entsubordinada" >
                             <label for="entidadSubordina">Entidad :</label>     
                             <div id="ent">
-                                <select th:fragment="entidades"  class="form-control" name="entidad" required="required" >
+                                <select class="form-control" name="entidad" required="required" >
                                     <option  value="-1">--Todas--</option> 
                                     <option  th:each='ent :${entidades}' th:value="${ent.idEntidad}" th:text='${ent.descripcion}'></option>                                  
                                 </select>
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="">Cargo :</label>                            
-                            <select class="form-control" name="cargo" required="required" >
-                                <option th:each='carg :${cargo}' th:value="${carg.idCargo}" th:text='${carg.descripcion}'></option>
-                            </select>
-                        </div>   
                         
                         <div class="form-group"> <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary">Mostrar</button>

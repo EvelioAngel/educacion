@@ -42,7 +42,6 @@ and open the template in the editor.
                         <div class="form-group">
                             <label for="">Enseñanza :</label>                            
                             <select id="mun" class="form-control" name="ensenanza" required="required" >
-                                <option  value="-1">--Todas--</option>
                                 <option th:each='ens :${ensenanza}' th:value="${ens.idEnsenanza}" th:text='${ens.descripcion}'></option>
                             </select>
                         </div>   

@@ -42,7 +42,6 @@ and open the template in the editor.
                         <div class="form-group">
                             <label for="">Nivel de Preparacion :</label>                            
                             <select class="form-control" name="nivelPreparacion" required="required" >
-                                <option  value="-1">--Todos--</option>
                                 <option th:each='niv :${nivelPreparacion}' th:value="${niv.idNivelPreparacion}" th:text='${niv.descripcion}'></option>
                             </select>
                         </div>   

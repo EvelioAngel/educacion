@@ -280,4 +280,45 @@ public class ReportesController {
         
         util.exportar(params, response, con, url, name);
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   @RequestMapping(value = "/reportes/view/trab_alta_baja", method = RequestMethod.GET)
+    public String viewTrabAltaBaja(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        return "reportes/trab_alta_baja";
+    } 
+    
+    @RequestMapping(value = "/reportes/trab_alta_baja", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabAltaBaja(Integer municipio, Integer entidad, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_alta_baja.jasper";
+        String name = "trab_alta_baja-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();        
+        params.put("municipio", municipio); 
+        params.put("entidad",entidad);
+        
+        util.exportar(params, response, con, url, name);
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "/reportes/view/trab_mun_ent_ge", method = RequestMethod.GET)
+    public String viewTrabGrupoEscala(Model model) {        
+        model.addAttribute("municipios", repoMun.findAll());
+        return "reportes/trab_mun_ent_ge";
+    } 
+    
+    @RequestMapping(value = "/reportes/trab_mun_ent_ge", method = RequestMethod.GET)
+    public @ResponseBody
+    void trabGrupoEscala(Integer municipio, Integer entidad, HttpServletResponse response) throws SQLException {
+        String url = "templates/reportes/trab_mun_ent_ge.jasper";
+        String name = "trab_mun_ent_ge-";
+        HashMap<String, Object> params = new HashMap<>();
+        Connection con = datasource.getConnection();        
+        params.put("municipio", municipio); 
+        params.put("entidad",entidad);
+        params.put("SUBREPORT_DIR","templates/reportes/");
+        
+        util.exportar(params, response, con, url, name);
+    }
 }

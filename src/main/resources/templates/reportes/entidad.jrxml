@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="entidad" language="groovy" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="municipio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyectos\\Educacion_Prov\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="entidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+e.id_municipio,
+m.descripcion as municipio,
+e.id_entidad,
+e.descripcion as entidad,
+count(t.id_trabajador) as cantidad
+from trabajador t
+inner join entidad e on t.id_entidad = e.id_entidad
+inner join municipio m on e.id_municipio = m.id_municipio
+where ('-1' = $P{municipio} OR e.id_municipio = $P{municipio} ) and ('-1' = $P{entidad} OR e.id_entidad = $P{entidad} )
+group by e.id_municipio, e.id_entidad, m.descripcion, e.descripcion
+order by e.id_municipio, m.descripcion, e.descripcion]]>
+	</queryString>
+	<field name="id_municipio" class="java.lang.Integer"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="id_entidad" class="java.lang.Integer"/>
+	<field name="entidad" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="sum_cant_entidad" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="15"/>
+				<textElement>
+					<font fontName="Verdana" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="150" y="0" width="200" height="15"/>
+				<subreportParameter name="municipio">
+					<subreportParameterExpression><![CDATA[$P{municipio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="entidad">
+					<subreportParameterExpression><![CDATA[$F{id_entidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "grupo_escala.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

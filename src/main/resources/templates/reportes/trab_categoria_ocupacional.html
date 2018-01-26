@@ -42,7 +42,6 @@ and open the template in the editor.
                         <div class="form-group">
                             <label for="">Catgoria Ocupacional :</label>                            
                             <select class="form-control" name="categoriaOcupacional" required="required" >
-                                <option  value="-1">--Todas--</option>
                                 <option th:each='cat :${categoriaOcupacional}' th:value="${cat.idCategoriaOcupacional}" th:text='${cat.descripcion}'></option>
                             </select>
                         </div>   
